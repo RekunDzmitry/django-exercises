@@ -1,0 +1,40 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}
+Task List - My Todo List App
+{% endblock %}
+
+{% block content %}
+<h1>Task List</h1>
+{% if tasks %}
+<ul>
+  {% for task in tasks %}
+  <li class="task">
+    <input type="checkbox" {% if task.completed %}checked{% endif %} disabled>
+    <div>{{ task.description }}</div>
+    <div>
+      <form method="post" action="{% url 'task_delete' task.pk %}">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+      </form>
+    </div>
+    <div>
+      <form method="post" action="{% url 'task_complete' task.pk %}">
+        {% csrf_token %}
+        <input type="submit" value="Complete">
+      </form>
+    </div>
+    <div>
+      <form method="post" action="{% url 'task_edit' task.pk %}">
+        {% csrf_token %}
+        <input type="submit" value="Edit">
+      </form>
+    </div>
+
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No tasks found.</p>
+{% endif %}
+{% endblock %}
