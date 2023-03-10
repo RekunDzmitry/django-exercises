@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h2>Blog Posts</h2>
+<ul>
+    {% for post in posts %}
+    <li>
+        <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        <p class="date">{{ post.published_date }}</p>
+        <p>{{ post.text|linebreaks }}</p>
+        <p>
+            <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-default">Edit</a>
+            <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-default">Remove</a>
+        </p>
+    </li>
+    {% empty %}
+    <li>No posts yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
